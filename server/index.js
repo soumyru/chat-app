@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     // origin: "http://localhost:3000",
-    origin: "https://your-client-url.onrender.com",//hosted the app on render
+    origin: "https://chat-app-1-twu3.onrender.com/",//client link; hosted the app on render
     methods: ["GET", "POST"]
   }
 });
