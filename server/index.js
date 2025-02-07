@@ -9,7 +9,14 @@ const router = require('./router');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+// const io = socketio(server);
+const io = socketio(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
+
 
 app.use(cors());
 app.use(router);
@@ -33,7 +40,10 @@ io.on('connect', (socket) => {
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    // io.to(user.room).emit('message', { user: user.name, text: message });
+    if (user) {
+      io.to(user.room).emit('message', { user: user.name, text: message });
+    }
 
     callback();
   });

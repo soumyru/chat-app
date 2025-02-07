@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import io from "socket.io-client";
+import { useLocation } from 'react-router-dom';
 
 import TextContainer from '../TextContainer/TextContainer';
 import Messages from '../Messages/Messages';
@@ -13,7 +14,8 @@ const ENDPOINT = 'http://localhost:5000';
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chat = () => {
+  const location = useLocation();
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
@@ -33,7 +35,12 @@ const Chat = ({ location }) => {
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search]);
+  // }, [ENDPOINT, location.search]);
+  return () => {
+    socket.disconnect();
+    socket.off();
+  };
+}, [location.search]);
   
   useEffect(() => {
     socket.on('message', message => {
@@ -43,6 +50,11 @@ const Chat = ({ location }) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
+// }, []);
+return () => {
+  socket.off('message');
+  socket.off('roomData');
+};
 }, []);
 
   const sendMessage = (event) => {
