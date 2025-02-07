@@ -10,7 +10,8 @@ import Input from '../Input/Input';
 
 import './Chat.css';
 
-const ENDPOINT = 'http://localhost:5000';
+// const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://chat-app-ir9k.onrender.com/';//server link; hosted on render
 
 let socket;
 
