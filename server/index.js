@@ -13,13 +13,16 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     // origin: "http://localhost:3000",
-    origin: "https://chat-app-1-twu3.onrender.com/",//client link; hosted the app on render
+    origin: "https://chat-app-149o.onrender.com",//client link; hosted the app on render
     methods: ["GET", "POST"]
   }
 });
 
 
-app.use(cors());
+app.use(cors({
+  origin: "https://chat-app-149o.onrender.com"
+}));
+// app.use(cors());
 app.use(router);
 
 io.on('connect', (socket) => {
